@@ -6,7 +6,7 @@
     android:layout_height="30dp">
 
     <TextView
-        android:id="@+id/current_date_event_text_view_row"
+        android:id="@+id/current_week_event_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

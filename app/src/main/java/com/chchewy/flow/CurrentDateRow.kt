@@ -1,6 +1,5 @@
 package com.chchewy.flow
 
-import androidx.recyclerview.widget.RecyclerView
 import com.chchewy.flow.models.PlannedEvent
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -12,7 +11,7 @@ class CurrentDateRow(val plannedEvent: PlannedEvent): Item<ViewHolder>() {
     }
 
     override fun bind(viewHolder: ViewHolder, position: Int) {
-        viewHolder.itemView.event_text_view_row.text = plannedEvent.text
+        viewHolder.itemView.current_date_event_text_view_row.text = plannedEvent.text
 
     }
 }
