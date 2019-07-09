@@ -1,5 +1,6 @@
-package com.chchewy.flow
+package com.chchewy.flow.calendars
 
+import com.chchewy.flow.R
 import com.chchewy.flow.models.PlannedEvent
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
