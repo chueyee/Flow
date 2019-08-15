@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "573776648621",
+    "firebase_url": "https://flow-9a478.firebaseio.com",
+    "project_id": "flow-9a478",
+    "storage_bucket": "flow-9a478.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:573776648621:android:c0e00336a59595eb",
+        "android_client_info": {
+          "package_name": "com.chchewy.flow"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "573776648621-d9mtjacngsuuhvr0mtbl1ftlta2p339k.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chchewy.flow",
+            "certificate_hash": "fb8af51fa89b246f12a2c6336544c01ace9da0b6"
+          }
+        },
+        {
+          "client_id": "573776648621-d05cnma52qc734d5ita76v9ldpgdiudr.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBnIuuzBnmNBELPYHXu0YUFJx_kc5sVfLc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "573776648621-d05cnma52qc734d5ita76v9ldpgdiudr.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

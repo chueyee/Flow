@@ -14,15 +14,16 @@ import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
 import kotlinx.android.synthetic.main.activity_main.*
 import java.text.DecimalFormat
+import java.util.*
 
 class MainActivity : AppCompatActivity() {
-    // Static val/var
+    // Static val
     companion object {
         const val TAG = "MainActivity"
     }
 
     // Test variables
-    var testGoal = 200
+    var testGoal = 100
     var newProgress: Int = 0
 
     var progressBar: ProgressBar? = null
@@ -45,9 +46,14 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+        // Getting the current date
+        val currentCalendar = Calendar.getInstance()
+        var currentDay = currentCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 
         progressBar = findViewById<ProgressBar>(R.id.home_progress_bar)
         progressAsText = findViewById<TextView>(R.id.home_progress_textview)
+
+        current_day_text_view.text = currentDay
 
         // Setting up click listener for ProgressBar
         // Click to start/pause
@@ -86,12 +92,17 @@ class MainActivity : AppCompatActivity() {
 
         // Creating dummy items for the RecyclerView to test functionality
         listenForDummyData()
+
+        profile_image_button.setOnClickListener {
+
+        }
     }
 
     // Runnable Object for Handler to update Progress Bar
     private var runnable: Runnable = object : Runnable {
 
         override fun run() {
+            val df = DecimalFormat("#")
 
             millisecondTime = SystemClock.uptimeMillis() - startTime
             updateTime = timeBuff + millisecondTime
@@ -100,7 +111,9 @@ class MainActivity : AppCompatActivity() {
 
             progressStatus = ((progressSaved.toDouble() + seconds)/testGoal)*100
             progressBar?.progress = progressStatus.toInt()
-            progressAsText?.text = progressStatus.toString().plus(percentString)
+
+            var formattedValue = df.format(progressStatus)
+            progressAsText?.text = formattedValue.plus(percentString)
 
             handler.postDelayed(this, 0)
         }

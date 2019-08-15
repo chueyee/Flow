@@ -8,7 +8,7 @@ android {
     compileSdkVersion 29
     defaultConfig {
         applicationId "com.chchewy.flow"
-        minSdkVersion 14
+        minSdkVersion 16
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -38,4 +38,11 @@ dependencies {
     implementation 'com.xwray:groupie-databinding:2.1.0'
 
     implementation 'me.zhanghai.android.materialprogressbar:library:1.6.1'
+
+    implementation 'com.google.firebase:firebase-core:17.0.0'
+    implementation 'com.google.firebase:firebase-auth:18.1.0'
+    implementation 'com.google.firebase:firebase-database:18.0.1'
+    implementation 'com.google.firebase:firebase-storage:18.1.1'
+
+    apply plugin: 'com.google.gms.google-services'
 }
