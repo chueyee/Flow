@@ -51,7 +51,7 @@
         android:layout_marginRight="16dp"
         android:ems="10"
         android:hint="Password"
-        android:imeOptions="actionGo"
+        android:imeOptions="actionNext"
         android:inputType="textPassword"
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
@@ -71,7 +71,7 @@
         android:text="Register"
         app:layout_constraintEnd_toStartOf="@+id/cancel_register_button"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_register_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/goal_register_edittext" />
 
     <Button
         android:id="@+id/cancel_register_button"
@@ -86,5 +86,23 @@
         android:text="Cancel"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/register_button"
+        app:layout_constraintTop_toBottomOf="@+id/goal_register_edittext" />
+
+    <EditText
+        android:id="@+id/goal_register_edittext"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginLeft="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:layout_marginRight="32dp"
+        android:ems="10"
+        android:hint="Set Your Study Hour Goals"
+        android:imeOptions="actionDone"
+        android:inputType="numberDecimal"
+        android:singleLine="true"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/password_register_edittext" />
 </androidx.constraintlayout.widget.ConstraintLayout>

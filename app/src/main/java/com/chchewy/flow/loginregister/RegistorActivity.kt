@@ -25,15 +25,26 @@ class RegistorActivity : AppCompatActivity() {
         register_button.setOnClickListener {
             performRegister()
         }
+
+        cancel_register_button.setOnClickListener {
+            val intent = Intent(this, LoginActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
+        }
     }
 
     private fun performRegister() {
         val email = email_register_edittext.text.toString()
         val password = password_register_edittext.text.toString()
+        var goal = goal_register_edittext.text.toString()
 
         if (email.isEmpty() || password.isEmpty()) {
             Toast.makeText(this, "Please enter a valid email/password", Toast.LENGTH_SHORT).show()
             return
+        }
+
+        if (goal.isEmpty()) {
+            goal = "0"
         }
 
         Log.d(TAG, "Email is: $email")
@@ -58,7 +69,7 @@ class RegistorActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")
 
         val user =
-            User(uid, email_register_edittext.text.toString())
+            User(uid, email_register_edittext.text.toString(), goal_register_edittext.text.toString().toFloat())
         ref.setValue(user)
             .addOnSuccessListener {
                 Log.d(TAG, "Successfully saved user to Firebase Database")

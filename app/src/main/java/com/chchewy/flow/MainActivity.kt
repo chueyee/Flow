@@ -94,7 +94,9 @@ class MainActivity : AppCompatActivity() {
         listenForDummyData()
 
         profile_image_button.setOnClickListener {
-
+            val intent = Intent(this, ProfileActivity::class.java)
+            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
+            startActivity(intent)
         }
     }
 
