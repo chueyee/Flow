@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginregister.RegistorActivity">
+    tools:context=".loginregister.RegisterActivity">
 
     <TextView
         android:id="@+id/register_title_textview"
@@ -12,7 +12,7 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="168dp"
         android:layout_marginLeft="168dp"
-        android:layout_marginTop="232dp"
+        android:layout_marginTop="32dp"
         android:layout_marginEnd="168dp"
         android:layout_marginRight="168dp"
         android:text="Registration"
@@ -22,13 +22,29 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/selectpicture_register_imageview"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginLeft="130dp"
+        android:layout_marginTop="64dp"
+        android:layout_marginEnd="131dp"
+        android:layout_marginRight="131dp"
+        android:clickable="true"
+        android:src="@android:drawable/ic_menu_camera"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/register_title_textview"
+        app:civ_border_width="4dp" />
+
     <EditText
         android:id="@+id/email_register_edittext"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginLeft="16dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="50dp"
         android:layout_marginEnd="16dp"
         android:layout_marginRight="16dp"
         android:ems="10"
@@ -38,7 +54,7 @@
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/register_title_textview" />
+        app:layout_constraintTop_toBottomOf="@+id/selectpicture_register_imageview" />
 
     <EditText
         android:id="@+id/password_register_edittext"
@@ -99,6 +115,7 @@
         android:layout_marginRight="32dp"
         android:ems="10"
         android:hint="Set Your Study Hour Goals"
+        android:gravity="center"
         android:imeOptions="actionDone"
         android:inputType="numberDecimal"
         android:singleLine="true"

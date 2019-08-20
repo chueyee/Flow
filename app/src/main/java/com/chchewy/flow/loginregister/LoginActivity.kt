@@ -47,7 +47,7 @@ class LoginActivity : AppCompatActivity() {
 
     // Registration activity
     private fun performRegister() {
-        val intent = Intent(this, RegistorActivity::class.java)
+        val intent = Intent(this, RegisterActivity::class.java)
         intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
         startActivity(intent)
 
