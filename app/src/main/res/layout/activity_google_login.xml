@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".loginregister.RegisterActivity">
+    tools:context=".loginregister.GoogleLoginActivity">
 
     <TextView
         android:id="@+id/register_title_textview"
@@ -38,41 +38,7 @@
         app:layout_constraintTop_toBottomOf="@+id/register_title_textview"
         app:civ_border_width="4dp" />
 
-    <EditText
-        android:id="@+id/email_register_edittext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="50dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:hint="Email Address"
-        android:imeOptions="actionNext"
-        android:inputType="textPersonName"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/selectpicture_register_imageview" />
 
-    <EditText
-        android:id="@+id/password_register_edittext"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
-        android:layout_marginLeft="16dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="16dp"
-        android:layout_marginRight="16dp"
-        android:ems="10"
-        android:hint="Password"
-        android:imeOptions="actionNext"
-        android:inputType="textPassword"
-        android:singleLine="true"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/email_register_edittext" />
 
     <Button
         android:id="@+id/register_button"
@@ -121,6 +87,6 @@
         android:singleLine="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/password_register_edittext" />
+        app:layout_constraintTop_toBottomOf="@+id/selectpicture_register_imageview" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

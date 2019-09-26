@@ -7,35 +7,31 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.provider.MediaStore
 import android.util.Log
-import android.widget.Toast
 import com.chchewy.flow.MainActivity
 import com.chchewy.flow.R
 import com.chchewy.flow.models.User
-import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import kotlinx.android.synthetic.main.activity_register.*
+import kotlinx.android.synthetic.main.activity_google_login.*
 import java.util.*
 
-class RegisterActivity : AppCompatActivity() {
+class GoogleLoginActivity : AppCompatActivity() {
 
     companion object {
-        const val TAG = "RegisterActivity"
+        const val TAG = "GoogleLoginActivity"
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_register)
+        setContentView(R.layout.activity_google_login)
 
         register_button.setOnClickListener {
             performRegister()
         }
 
         cancel_register_button.setOnClickListener {
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
-            startActivity(intent)
+            finish()
         }
 
         selectpicture_register_imageview.setOnClickListener {
@@ -43,38 +39,24 @@ class RegisterActivity : AppCompatActivity() {
             intent.type = "image/*"
             startActivityForResult(intent, 0)
         }
+
+
     }
 
     private fun performRegister() {
-        val email = email_register_edittext.text.toString()
-        val password = password_register_edittext.text.toString()
+        val ref = FirebaseAuth.getInstance()
+        val currentUser = ref.currentUser
+
+        val currentUserEmail = currentUser?.email
         var goal = goal_register_edittext.text.toString()
 
-        if (email.isEmpty() || password.isEmpty()) {
-            Toast.makeText(this, "Please enter a valid email/password", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        if (goal.isEmpty()) {
+        if (goal.isEmpty())
             goal = "0"
-        }
 
-        Log.d(TAG, "Email is: $email")
-        Log.d(TAG, "Password is: $password")
+        Log.d(TAG, "Email = $currentUserEmail")
 
-        FirebaseAuth.getInstance().createUserWithEmailAndPassword(email, password)
-            .addOnCompleteListener{
-                if (!it.isSuccessful) return@addOnCompleteListener
+        uploadImageToFirebaseStorage()
 
-                Log.d(TAG, "Successfully created user with uid: ${it.result?.user?.uid}")
-
-                uploadImageToFirebaseStorage()
-
-            }
-            .addOnFailureListener{
-                Log.d(TAG, "Failed to create user: ${it.message}")
-                Toast.makeText(this, "Failed to create user: ${it.message}", Toast.LENGTH_SHORT).show()
-            }
     }
 
     private var selectedPhotoUri: Uri? = null
@@ -87,11 +69,11 @@ class RegisterActivity : AppCompatActivity() {
 
         ref.putFile(selectedPhotoUri!!)
             .addOnSuccessListener {
-                Log.d("RegisterActivity", "Successfully uploaded image: ${it.metadata?.path}")
+                Log.d(TAG, "Successfully uploaded image: ${it.metadata?.path}")
 
                 ref.downloadUrl.addOnSuccessListener {
                     it.toString()
-                    Log.d("RegisterActivity", "File Location: $it")
+                    Log.d(TAG, "File Location: $it")
 
                     saveUserToDatabase(it.toString())
                 }
@@ -106,18 +88,19 @@ class RegisterActivity : AppCompatActivity() {
         val ref = FirebaseDatabase.getInstance().getReference("/user/$uid")
 
         val user =
-            User(uid, email_register_edittext.text.toString(), goal_register_edittext.text.toString().toFloat(), profileImageUrl)
+            User(uid, FirebaseAuth.getInstance().currentUser?.email.toString(), goal_register_edittext.text.toString().toFloat(), profileImageUrl)
         ref.setValue(user)
             .addOnSuccessListener {
-                Log.d(TAG, "Successfully saved user to Firebase Database")
+                Log.d(TAG, "Successfully saved user to FireBase Database")
 
                 val intent = Intent(this, MainActivity::class.java)
                 intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
                 startActivity(intent)
             }
-            .addOnFailureListener{
+            .addOnFailureListener {
                 Log.d(TAG, "Failed to save user: ${it.message}")
             }
+
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {

@@ -9,6 +9,12 @@ import android.util.Log
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.recyclerview.widget.DividerItemDecoration
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
+import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.Item
 import com.xwray.groupie.ViewHolder
@@ -23,8 +29,9 @@ class MainActivity : AppCompatActivity() {
     }
 
     // Test variables
-    var testGoal = 100
-    var newProgress: Int = 0
+    var hour : Long = 3600
+    var setGoal : Long = 100
+    var calculatedStatus = 0
 
     var progressBar: ProgressBar? = null
     var progressStatus: Double = 0.0
@@ -42,6 +49,7 @@ class MainActivity : AppCompatActivity() {
     var seconds: Int = 0
     var milliSeconds: Int = 0
 
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -50,18 +58,54 @@ class MainActivity : AppCompatActivity() {
         val currentCalendar = Calendar.getInstance()
         var currentDay = currentCalendar.getDisplayName(Calendar.DAY_OF_WEEK, Calendar.LONG, Locale.getDefault())
 
-        progressBar = findViewById<ProgressBar>(R.id.home_progress_bar)
-        progressAsText = findViewById<TextView>(R.id.home_progress_textview)
+        progressBar = findViewById(R.id.home_progress_bar)
+        progressAsText = findViewById(R.id.home_progress_textview)
 
         current_day_text_view.text = currentDay
 
+        // Setting up variables to access current user data by creating variable with User's ID
+        // and using it to retrieve the account's data
+        var user = FirebaseAuth.getInstance().currentUser
+        val userId = user?.uid.toString()
+
+        // Creating reference variable to access the Firebase Database to retrieve user's data
+        val ref = FirebaseDatabase.getInstance().getReference("/user").child(userId)
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val photoUrl = p0.child("profileImageUrl").value
+
+                Picasso.get().load(photoUrl.toString()).into(profile_image_button)
+                Log.d(TAG, photoUrl.toString())
+                Log.d(TAG, userId)
+
+                if (photoUrl == null)
+                    Log.d(TAG, "Photo URL is null")
+            }
+        })
+
+        ref.addValueEventListener(object : ValueEventListener {
+            override fun onCancelled(p0: DatabaseError) {
+            }
+
+            override fun onDataChange(p0: DataSnapshot) {
+                val goal = p0.child("goal").value as Long
+                setGoal = goal
+                Log.d(TAG, goal.toString())
+
+
+            }
+
+        })
         // Setting up click listener for ProgressBar
         // Click to start/pause
         home_progress_bar.setOnClickListener {
             // If false then starts the timer and keeps track of time elapsed while updating the Progress Bar
             // If true then stops timer and saves progress before removing callbacks to maintain progress of Progress Bar
             if (flag) {
-                progressSaved = progressStatus.toInt()
+                progressSaved = calculatedStatus
                 progressBar?.progress = progressSaved
                 progressAsText?.text = progressSaved.toString().plus(percentString)
                 handler.removeCallbacks(runnable)
@@ -78,6 +122,7 @@ class MainActivity : AppCompatActivity() {
         }
 
         // Setting up the view for each individual Event Items in the RecyclerView
+        //
         current_date_recycler_view.adapter = adapterCurrentDate
         current_date_recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
@@ -95,7 +140,6 @@ class MainActivity : AppCompatActivity() {
 
         profile_image_button.setOnClickListener {
             val intent = Intent(this, ProfileActivity::class.java)
-            intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TASK.or(Intent.FLAG_ACTIVITY_NEW_TASK)
             startActivity(intent)
         }
     }
@@ -111,10 +155,11 @@ class MainActivity : AppCompatActivity() {
             seconds = (updateTime / 1000).toInt()
             milliSeconds = (updateTime % 1000).toInt()
 
-            progressStatus = ((progressSaved.toDouble() + seconds)/testGoal)*100
-            progressBar?.progress = progressStatus.toInt()
+            progressStatus = ((progressSaved.toDouble() + seconds) / hour) * 100
+            calculatedStatus = (progressStatus/setGoal).toInt()
+            progressBar?.progress = calculatedStatus
 
-            var formattedValue = df.format(progressStatus)
+            var formattedValue = df.format(calculatedStatus)
             progressAsText?.text = formattedValue.plus(percentString)
 
             handler.postDelayed(this, 0)
