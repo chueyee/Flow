@@ -91,13 +91,16 @@ class MainActivity : AppCompatActivity() {
             }
 
             override fun onDataChange(p0: DataSnapshot) {
-                val goal = p0.child("goal").value as Long
-                setGoal = goal
-                Log.d(TAG, goal.toString())
-
-
+                // If Goal is not null then set that as value of setGoal
+                // If is null then set as 0
+                if (p0.child("goal") != null) {
+                    val goal = p0.child("goal").value as Long
+                    setGoal = goal
+                } else {
+                    setGoal = 0
+                    Log.d(TAG, setGoal.toString())
+                }
             }
-
         })
         // Setting up click listener for ProgressBar
         // Click to start/pause
@@ -118,7 +121,6 @@ class MainActivity : AppCompatActivity() {
                 }).start()
                 flag = true
             }
-
         }
 
         // Setting up the view for each individual Event Items in the RecyclerView
@@ -127,12 +129,11 @@ class MainActivity : AppCompatActivity() {
         current_date_recycler_view.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
 
         // Click functions of Event Items in the RecyclerView
-        adapterCurrentDate.setOnItemClickListener {item, view ->
+        adapterCurrentDate.setOnItemClickListener { _, _ ->
             Log.d(TAG, "date adapter clicked!")
 
             val intent = Intent(this, EventActivity::class.java)
             startActivity(intent)
-
         }
 
         // Creating dummy items for the RecyclerView to test functionality

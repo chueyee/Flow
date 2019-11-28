@@ -36,7 +36,8 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/register_title_textview"
-        app:civ_border_width="4dp" />
+        app:civ_border_width="4dp"
+        android:focusable="true" />
 
 
 

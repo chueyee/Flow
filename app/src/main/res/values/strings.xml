@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Flow</string>
+    <string name="CALENDAR_API_KEY">AIzaSyDTCTIfJqkNDNwj98cLv-hrwcdj_QfYT_Y</string>
 </resources>

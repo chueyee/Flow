@@ -5,18 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import com.chchewy.flow.loginregister.LoginActivity
-import com.chchewy.flow.models.User
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import com.squareup.picasso.Picasso
-import com.xwray.groupie.GroupAdapter
-import com.xwray.groupie.Item
-import com.xwray.groupie.ViewHolder
-import kotlinx.android.synthetic.main.activity_main.*
 import kotlinx.android.synthetic.main.activity_profile.*
 
 class ProfileActivity : AppCompatActivity() {
@@ -43,7 +37,7 @@ class ProfileActivity : AppCompatActivity() {
         }
 
 
-        var user = FirebaseAuth.getInstance().currentUser
+        val user = FirebaseAuth.getInstance().currentUser
         val userId = user?.uid.toString()
 
         username_profile_textview.text = user?.email.toString()

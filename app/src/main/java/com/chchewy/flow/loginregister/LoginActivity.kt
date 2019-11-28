@@ -1,7 +1,6 @@
 package com.chchewy.flow.loginregister
 
 import android.content.Intent
-import android.media.MediaPlayer
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -12,23 +11,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
 import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
-import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.api.ApiException
-import com.google.android.gms.common.api.GoogleApiClient
-import com.google.android.gms.tasks.OnCompleteListener
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUserMetadata
 import com.google.firebase.auth.GoogleAuthProvider
 import kotlinx.android.synthetic.main.activity_login.*
 
-class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedListener {
+class LoginActivity : AppCompatActivity() {
 
     // Static val
     companion object {
         const val TAG = "LoginActivity"
         const val RC_SIGN_IN = 1
+        const val GoogleBundle = 2
     }
 
     private lateinit var auth: FirebaseAuth
@@ -151,8 +146,9 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
                     // If successful
                     val metadata: FirebaseUserMetadata = auth.currentUser?.metadata!!
                     Log.d(TAG, "signInWithCredential: Success")
-                    Log.d(TAG, "metadata: $metadata")
-
+                    Log.d(TAG, "last signed in: ${metadata.lastSignInTimestamp}")
+                    Log.d(TAG, "creation time: ${metadata.creationTimestamp}")
+                    
                     if (metadata.creationTimestamp == metadata.lastSignInTimestamp) {
                         // If user is new then continue to registration page
                         val intent = Intent(this, GoogleLoginActivity::class.java)
@@ -169,9 +165,5 @@ class LoginActivity : AppCompatActivity(), GoogleApiClient.OnConnectionFailedLis
                     Toast.makeText(this, "Authentication Failed.", Toast.LENGTH_SHORT).show()
                 }
             }
-    }
-
-    override fun onConnectionFailed(p0: ConnectionResult) {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 }

@@ -15,6 +15,14 @@
       },
       "oauth_client": [
         {
+          "client_id": "573776648621-6ckgvvf8htfc3vidatiqhk62tl32ht8s.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.chchewy.flow",
+            "certificate_hash": "a3ac28e55fa5941560a43aeb4b392e200b2add5a"
+          }
+        },
+        {
           "client_id": "573776648621-d9mtjacngsuuhvr0mtbl1ftlta2p339k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
@@ -29,7 +37,7 @@
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyBnIuuzBnmNBELPYHXu0YUFJx_kc5sVfLc"
+          "current_key": "AIzaSyBbWLba-S1-DT6UM8VgA71GzzCe-YmEc14"
         }
       ],
       "services": {
